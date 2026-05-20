@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const Navbar = () => {
 
     const [darkMode, setDarkMode] = useState(false);
+    const [search, setSearch] = useState("");
+
+    const history = useHistory();
 
     const toggleMode = () => {
         setDarkMode(!darkMode);
@@ -14,6 +17,15 @@ const Navbar = () => {
         } else {
             document.body.style.backgroundColor = "white";
             document.body.style.color = "black";
+        }
+    };
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+
+        if (search.trim() !== "") {
+            history.push(`/search/${search}`);
+            setSearch("");
         }
     };
 
@@ -56,14 +68,32 @@ const Navbar = () => {
                                 <Link className="nav-link" to="/technology">Technology</Link>
                             </li>
 
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/entertainment">Entertainment</Link>
+                            </li>
+
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/science">Science</Link>
+                            </li>
+
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/general">General</Link>
+                            </li>
+
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/health">Health</Link>
+                            </li>
+
                         </ul>
 
                         {/* Search Bar */}
-                        <form className="d-flex me-3">
+                        <form className="d-flex me-3" onSubmit={handleSearch}>
                             <input
                                 className="form-control me-2"
                                 type="search"
                                 placeholder="Search news..."
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
                             />
 
                             <button
